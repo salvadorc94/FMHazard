@@ -5,7 +5,8 @@
  */
 package hazard.objects;
 
-import hazard.framework.*;
+import hazard.framework.GameObject;
+import hazard.framework.ObjectId;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -15,29 +16,26 @@ import java.util.LinkedList;
  *
  * @author jaiel
  */
-
-//-----------Class is for testing purposes only-----------
-public class Block extends GameObject{
-
-
-    public Block(double x, double y){
-        super(x,y,ObjectId.Block);
+public class Player extends GameObject{
+    
+    public Player(double ix, double iy){
+        super(ix,iy,ObjectId.Player);
         
     }
+    
     @Override
     public void tick(LinkedList<GameObject> objects) {
+        
     }
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.white);
-        g.fillRect((int)super.pos.x, (int)super.pos.y, 50, 50);
+        g.setColor(Color.blue);
+        g.fillOval((int)super.pos.x-10, (int)super.pos.y-10, 20, 20);
     }
 
     @Override
-    public Rectangle getBounds(){
-        return new Rectangle((int)super.pos.x, (int)super.pos.y, 50, 50);
+    public Rectangle getBounds() {
+        return new Rectangle((int)super.pos.x-10, (int)super.pos.y-10, 20, 20);
     }
-    
-    
 }

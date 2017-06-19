@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package hazard.framework;
-
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
@@ -14,55 +13,85 @@ import java.util.LinkedList;
  * @author jaiel
  */
 public abstract class GameObject {
-    protected float x,y;
+    protected Vector pos;
     protected ObjectId id;
-    protected float velX=0, velY=0;
+    protected Vector vel=new Vector(0,0);
     
-    public GameObject(float x, float y, ObjectId id){
-        this.x=x;
-        this.y=y;
+    public GameObject(Vector position, ObjectId id){
+        this.pos=position;
+        this.id=id;
+    }
+    public GameObject(double x, double y, ObjectId id){
+        this.pos=new Vector(x,y);
         this.id=id;
     }
     
     public abstract void tick(LinkedList<GameObject> object);
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics2D g);
     public abstract Rectangle getBounds();
     
     
-    public float getX() {
-        return this.x;
+    public Vector getPosition(){
+        return this.pos;
+    }
+    public Vector getPosition(boolean copy){
+        if(copy)
+            return new Vector(this.pos.x, this.pos.y);
+        return this.pos;
     }
     
-    public float getY() {
-        return this.y;
+    public double getX() {
+        return this.pos.x;
+    }
+    
+    public double getY() {
+        return this.pos.y;
     }
 
-    public void setX(float x) {
-        this.x=x;
+    
+    public void setPosition(Vector position){
+        this.pos=position;
+    }
+    
+    public void setX(double x) {
+        this.pos.x=x;
     }
 
-    public void setY(float y) {
-        this.y=y;
+    public void setY(double y) {
+        this.pos.y=y;
     }
 
     
     
+    public Vector getVelocity(){
+        return this.vel;
+    }
+    public Vector getVelocity(boolean copy){
+        if(copy)
+            return new Vector(this.vel.x, this.vel.y);
+        return this.vel;
+    }
+    
+    public double getVelX() {
+        return this.vel.x;
+    }
+
+    public double getVelY() {
+        return this.vel.y;
+    }
+
     
     
-    public float getVelX() {
-        return this.velX;
+    public void setVelocity(Vector vel){
+        this.vel=vel;
+    }
+    
+    public void setVelX(double velX) {
+        this.vel.x=velX;
     }
 
-    public float getVelY() {
-        return this.velY;
-    }
-
-    public void setVelX(float velX) {
-        this.velX=velX;
-    }
-
-    public void setVelY(float velY) {
-        this.velY=velY;
+    public void setVelY(double velY) {
+        this.vel.y=velY;
     }
 
     

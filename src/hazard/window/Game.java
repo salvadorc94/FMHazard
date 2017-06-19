@@ -5,13 +5,15 @@
  */
 package hazard.window;
 
-import hazard.framework.*;
+import hazard.framework.Vector;
 import hazard.objects.*;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,6 +26,7 @@ public class Game extends JPanel implements Runnable{
     
     public static int WIDTH, HEIGHT;
     Handler handler;
+    public static Player PLAYER;
     
     
     
@@ -32,7 +35,14 @@ public class Game extends JPanel implements Runnable{
         WIDTH=getWidth();
         HEIGHT=getHeight();
         handler=new Handler();
-        handler.createRandomBlocks();
+        //handler.createRandomBlocks();
+        PLAYER=new Player(WIDTH/2,HEIGHT/2);
+        handler.addObject(PLAYER);
+        ArrayList<Vector> pth= new ArrayList();
+        pth.add(new Vector(700,300));
+        handler.addObject(new Chaser(700,0,pth));
+        handler.addObject(new Kamikaze(0,0, 1,2));
+        handler.addObject(new Asteroid(PLAYER.getPosition(true)));
                 
     }
     
@@ -105,15 +115,13 @@ public class Game extends JPanel implements Runnable{
     }
     
     
-    
+    @Override
     public void paint(Graphics ctx){    //Update the game's representation (Screen)
         super.paint(ctx);
-        
-        
         ctx.setColor(Color.black);
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
             
-        handler.render(ctx);
+        handler.render((Graphics2D) ctx);
         ctx.dispose();
         
     }

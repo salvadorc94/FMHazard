@@ -11,5 +11,8 @@ package hazard.framework;
  */
 public enum ObjectId {
     Player(),
+    Asteroid(),
+    Kamikaze(),
+    Chaser(),
     Block();//ObjectId for testing purposes only
 }
