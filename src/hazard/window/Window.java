@@ -20,16 +20,16 @@ public class Window extends JFrame{
         game.setMaximumSize(new Dimension(w,h));
         game.setMinimumSize(new Dimension(w,h));
         
-        JFrame frame=new JFrame(title);
-        frame.add(game);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+     //   JFrame frame=new JFrame(title);
+        this.add(game);
+        this.pack();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
         
         game.start();
-        
+       
     }
     
 }

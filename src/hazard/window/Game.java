@@ -5,34 +5,56 @@
  */
 package hazard.window;
 
-import hazard.framework.*;
+import hazard.framework.Vector;
 import hazard.objects.*;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author jaiel
  */
 public class Game extends JPanel implements Runnable{
-    
+    //private double x=-500,y=-500,dx=1400,dy=1200;
+    int i=1;
     private boolean running = false;
     private Thread thread;
-    
+    private static Fondo fondo;
     public static int WIDTH, HEIGHT;
     Handler handler;
+    public static Player PLAYER;
+    
     
     
     
     //  Inits all objects (all objects extend from GameObject)
     private void init(){
+        
         WIDTH=getWidth();
         HEIGHT=getHeight();
         handler=new Handler();
-        handler.createRandomBlocks();
+        
+        //handler.createRandomBlocks();
+        PLAYER=new Player(WIDTH/2,HEIGHT/2);
+        handler.addObject(PLAYER);
+        handler.addObject(new Dodger(
+            new Vector(0,0),
+            new Vector(750,300),
+            new Vector(400,550)
+        ));
+        
+        ArrayList<Vector> pth= new ArrayList();
+        pth.add(new Vector(700,300));
+        handler.addObject(new Chaser(700,0,pth));
+        handler.addObject(new Kamikaze(0,0, 1,2));
+        handler.addObject(new Asteroid(PLAYER.getPosition(true)));
                 
     }
     
@@ -101,26 +123,32 @@ public class Game extends JPanel implements Runnable{
     }
     
     private void tick(){    //Update the game's state (Objects);
+        fondo.tick(null);
         handler.tick();
+        
     }
     
     
-    
+    @Override
     public void paint(Graphics ctx){    //Update the game's representation (Screen)
-        super.paint(ctx);
-        
-        
-        ctx.setColor(Color.black);
-        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+      
+            super.paint(ctx);
+            try{
+            fondo.render(ctx);
+            }
+            catch(Exception e){
+                System.out.println("x");
+            }
+            //ctx.setColor(Color.black);
+        //ctx.fillRect(0, 0, WIDTH, HEIGHT);
             
-        handler.render(ctx);
-        ctx.dispose();
+        handler.render((Graphics2D) ctx);
         
     }
 
     
     public static void main(String args[]){
-        
+        fondo = new Fondo(-500,-500,0.1);
         new Window(800,600,"5-Min Hazard ", new Game());
     }
 }
