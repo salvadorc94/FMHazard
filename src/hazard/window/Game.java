@@ -128,7 +128,6 @@ public class Game extends JPanel implements Runnable{
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
             
         handler.render((Graphics2D) ctx);
-        ctx.dispose();
         
     }
 
