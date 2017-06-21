@@ -38,6 +38,12 @@ public class Game extends JPanel implements Runnable{
         //handler.createRandomBlocks();
         PLAYER=new Player(WIDTH/2,HEIGHT/2);
         handler.addObject(PLAYER);
+        handler.addObject(new Dodger(
+            new Vector(0,0),
+            new Vector(750,300),
+            new Vector(400,550)
+        ));
+        
         ArrayList<Vector> pth= new ArrayList();
         pth.add(new Vector(700,300));
         handler.addObject(new Chaser(700,0,pth));

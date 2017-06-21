@@ -14,5 +14,6 @@ public enum ObjectId {
     Asteroid(),
     Kamikaze(),
     Chaser(),
+    Dodger(),
     Block();//ObjectId for testing purposes only
 }

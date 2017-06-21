@@ -9,7 +9,6 @@ package hazard.window;
 import java.util.LinkedList;
 
 import hazard.framework.GameObject;
-import hazard.framework.ObjectId;
 import hazard.objects.*;
 import java.awt.Graphics2D;
 

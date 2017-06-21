@@ -24,32 +24,48 @@ public class Chaser extends GameObject{
     if it has already gone through all positions it sets the next position
     to the player's current position;
     */
-    
-    //max velocity and aceleration rate of follower
-    private static final double ACEL=0.02;
-    private static final double MAXVEL=1.7;
-    private static final double MINDIST=15;
-    private boolean stopping=false;
     protected ArrayList<Vector> path;
     protected int nextpos=0;
+    
+    private double AMPX;
+    private double AMPY;
+    private double OFFSETX;
+    private double OFFSETY;
+    private int ticks;
     
     
     public Chaser(double ix, double iy){
         super(ix,iy,ObjectId.Chaser);
+        this.path.add(Game.PLAYER.getPosition(true));
+        CalcNextPos();
         
     }
     public Chaser(Vector ipos){
         super(ipos,ObjectId.Chaser);
+        this.path.add(Game.PLAYER.getPosition(true));
+        CalcNextPos();
     }
     
     public Chaser(double ix, double iy, ArrayList<Vector> path){
         super(ix,iy,ObjectId.Chaser);
         this.path=path;
         
+        if(path.isEmpty()){
+            this.path.add(Game.PLAYER.getPosition(true));
+        }
+        
+        CalcNextPos();
+        
     }
     public Chaser(Vector ipos, ArrayList<Vector> path){
         super(ipos,ObjectId.Chaser);
         this.path=path;
+        
+        if(path.isEmpty()){
+            this.path.add(Game.PLAYER.getPosition(true));
+        }
+        
+        CalcNextPos();
     }
     
     
@@ -57,33 +73,33 @@ public class Chaser extends GameObject{
         this.path=path;
     }
     
+    private void CalcNextPos(){
+        this.AMPX=(super.pos.x-this.path.get(nextpos).x)/2;
+        this.AMPY=(super.pos.y-this.path.get(nextpos).y)/2;
+        this.OFFSETX=super.pos.x-AMPX;
+        this.OFFSETY=super.pos.y-AMPY;
+        ticks=0;
+    }
     
     @Override
     public void tick(LinkedList<GameObject> objects) {
-        if(stopping){
-            if(super.vel.getlength()>0.3){
-                super.vel.minus(super.getVelocity(true).setlength(ACEL), true);
-            }
-            else{
-                stopping=false;
-            }
-        }
-        else{
-            if(this.nextpos==path.size()){
+        
+        
+        if(super.pos.equals(this.path.get(nextpos))){
+            this.nextpos++;
+            if(path.size()==nextpos){
                 this.path.add(Game.PLAYER.getPosition(true));
             }
+            //if super.pos=path.nextpos {collision}
+            CalcNextPos();
 
-            super.vel.plus(this.path.get(nextpos).minus(super.pos).setlength(ACEL),true);
-            if(super.vel.getlength()>MAXVEL)
-                super.vel.setlength(MAXVEL);
-
-
-            if(this.path.get(nextpos).minus(super.pos).getlength()<MINDIST){
-                this.stopping=true;
-                this.nextpos++;
-            }
         }
-        super.pos.plus(super.vel, true);
+        super.pos.x=AMPX*Math.cos(ticks*0.005*Math.PI)+OFFSETX;
+        super.pos.y=AMPY*Math.cos(ticks*0.005*Math.PI)+OFFSETY;
+        ticks++;
+        
+        
+       
              
     }
 

@@ -96,4 +96,8 @@ public class Vector {
         return new Vector(this.x*value,this.y*value);
         
     }
+    
+    public boolean equals(Vector vec){
+        return this.x==vec.x&&this.y==vec.y;
+    }
 }

@@ -29,12 +29,15 @@ public class Asteroid extends GameObject{
     
     public Asteroid(double ix, double iy){
         super(ix,iy,ObjectId.Asteroid);
-        super.vel=(new Vector(Game.WIDTH*Math.random(),Game.HEIGHT*Math.random())).minus(super.pos,true);
-        super.vel.setlength(MAXVEL*Math.random()+MINVEL);
+        newVel();
         
     }
     public Asteroid(Vector ipos){
         super(ipos,ObjectId.Asteroid);
+        newVel();
+    }
+    
+    private void newVel(){
         super.vel=(new Vector(Game.WIDTH*Math.random(),Game.HEIGHT*Math.random())).minus(super.pos,true);
         super.vel.setlength(MAXVEL*Math.random()+MINVEL);
     }
@@ -42,6 +45,26 @@ public class Asteroid extends GameObject{
     @Override
     public void tick(LinkedList<GameObject> objects) {
         super.pos.plus(super.vel, true);
+        
+        
+        // 25 size of asteroid, 100 pixels after screen border
+        if(super.pos.x+25<-100){
+            super.pos.x+=Game.WIDTH+100*2;
+            newVel();
+        }
+        if(super.pos.x-25>Game.WIDTH+100){
+            super.pos.x-=Game.WIDTH+100*2;
+            newVel();
+        }
+        
+        if(super.pos.y+25<-75){
+            super.pos.y+=Game.HEIGHT+75*2;
+            newVel();
+        }
+        if(super.pos.y-25>Game.HEIGHT+75){
+            super.pos.y-=Game.HEIGHT+75*2;
+            newVel();
+        }
     }
 
     @Override
