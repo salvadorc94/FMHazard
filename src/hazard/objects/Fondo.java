@@ -36,25 +36,23 @@ public class Fondo extends GameObject {
     public void tick(LinkedList<GameObject> object) {
         if(i==1){
              pos.x=pos.x+vel.x;pos.y=pos.y+vel.y;
-             if(pos.x==-10.099999999954797&&pos.y==-10.099999999954797){i=2;System.out.println(i);}
+             if((int)pos.x==-10&&(int)pos.y==-10){i=2;System.out.println(i);}
          }else if (i==2){
              pos.x=pos.x-vel.x;
-             
-             if(pos.x==-610.000000000025&&pos.y==-10.099999999954797){i=3;}
+             if((int)pos.x==-590&&(int)pos.y==-10){i=3;}
          } else if(i==3){
                  pos.y=pos.y-vel.y;
                  pos.x=pos.x+vel.x;
-                 if(pos.x==-10.099999999954797&&pos.y==-610.000000000025){i=4;}
+                 if((int)pos.x==-10&&(int)pos.y==-590){i=4;}
              }
          else if(i==4){
              pos.y=pos.y+vel.y;
-             if(pos.x==-10.099999999954797&&pos.y==-10.099999999954797){i=5;}
+             if((int)pos.x==-10&&(int)pos.y==-10){i=5;}
          }
          else if(i==5){
              pos.x=pos.x-vel.x;pos.y=pos.y-vel.y;
-             if(pos.x==-500&&pos.y==-500){i=1;}
+             if((int)pos.x==-500&&(int)pos.y==-500){i=1;}
          }
-        System.out.println(pos.x+" "+pos.y);
     }
 
     @Override

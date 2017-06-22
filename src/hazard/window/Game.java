@@ -22,13 +22,13 @@ import javax.swing.ImageIcon;
  * @author jaiel
  */
 public class Game extends JPanel implements Runnable{
-    //private double x=-500,y=-500,dx=1400,dy=1200;
+    private double x=-500,y=-500,dx=1400,dy=1200;
     int i=1;
     private boolean running = false;
     private Thread thread;
     private static Fondo fondo;
     public static int WIDTH, HEIGHT;
-    Handler handler;
+    private static Handler handler;
     public static Player PLAYER;
     
     
@@ -39,7 +39,7 @@ public class Game extends JPanel implements Runnable{
         
         WIDTH=getWidth();
         HEIGHT=getHeight();
-        handler=new Handler();
+        
         
         //handler.createRandomBlocks();
         PLAYER=new Player(WIDTH/2,HEIGHT/2);
@@ -135,8 +135,7 @@ public class Game extends JPanel implements Runnable{
             super.paint(ctx);
             try{
             fondo.render(ctx);
-            }
-            catch(Exception e){
+            }catch(Exception e){
                 System.out.println("x");
             }
             //ctx.setColor(Color.black);
@@ -148,7 +147,9 @@ public class Game extends JPanel implements Runnable{
 
     
     public static void main(String args[]){
-        fondo = new Fondo(-500,-500,0.1);
+        fondo = new Fondo(-500,-500,1.0);
+        handler=new Handler();
         new Window(800,600,"5-Min Hazard ", new Game());
+        
     }
 }
